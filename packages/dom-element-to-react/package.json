@@ -1,0 +1,14 @@
+{
+  "name": "dom-element-to-react",
+  "version": "2.0.0-pre",
+  "description": "Convert the children of a node to React elements",
+  "main": "lib/index.js",
+  "author": "Simon Andrews <me@simonandrews.ca>",
+  "license": "MIT",
+  "scripts": {
+    "compile": "tsc"
+  },
+  "peerDependencies": {
+    "react": "^16.4.0"
+  }
+}

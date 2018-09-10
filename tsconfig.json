@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5",
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "lib": ["es2017", "dom"]
+  }
+}
