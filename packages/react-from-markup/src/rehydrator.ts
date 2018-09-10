@@ -67,6 +67,7 @@ const render = ({
 
 export default async (container: Element) => {
   const roots = Array.from(
+    // TODO: allow setting a container identifier so multiple rehydration instances can exist
     container.querySelectorAll("[data-react-from-markup-container]")
   );
 
