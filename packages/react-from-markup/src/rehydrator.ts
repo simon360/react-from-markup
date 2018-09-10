@@ -48,27 +48,51 @@ const customHandler = async (node: Node) => {
   return false;
 };
 
+const render = ({
+  rehydrated,
+  root
+}: {
+  rehydrated?: React.ReactNode;
+  root?: Element;
+}) => {
+  if (!rehydrated || !root) {
+    return;
+  }
+
+  // Unmount; it's possible that this was rehydrated previously.
+  ReactDOM.unmountComponentAtNode(root);
+
+  ReactDOM.render(rehydrated as React.ReactElement<any>, root);
+};
+
 export default async (container: Element) => {
   const roots = Array.from(
     container.querySelectorAll("[data-react-from-markup-container]")
   );
 
+  // TODO: solve race condition when a second rehydrate runs
+
+  const renders = [];
+
   for (const root of roots) {
     // It's possible that this root was detached by a previous render in this loop
     if (container.contains(root)) {
-      try {
-        const rehydrated = await domElementToReact(root, customHandler);
+      renders.push(async () => {
+        try {
+          const rehydrated = await domElementToReact(root, customHandler);
 
-        // Unmount; it's possible that this was rehydrated previously.
-        ReactDOM.unmountComponentAtNode(root);
+          return { root, rehydrated };
+        } catch (e) {
+          /* tslint:disable-next-line no-console */
+          console.error("Rehydration failure", e);
+        }
 
-        ReactDOM.render(rehydrated as React.ReactElement<any>, root);
-      } catch (e) {
-        /* tslint:disable-next-line no-console */
-        console.error("Rehydration failure", e);
-      }
+        return {};
+      });
     }
   }
+
+  await Promise.all(renders.map(r => r().then(render)));
 };
 
 export { IRehydrator, rehydratableToReactElement, registerRehydrator };

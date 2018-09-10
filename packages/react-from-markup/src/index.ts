@@ -1,7 +1,5 @@
-import rehydrateFromRoot, {
+export {
+  default,
   registerRehydrator,
   rehydratableToReactElement
 } from "./rehydrator";
-
-export default rehydrateFromRoot;
-export { rehydratableToReactElement, registerRehydrator };
