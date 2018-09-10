@@ -1,0 +1,23 @@
+---
+name: ShowMoreText
+
+menu: Demos
+order: 8
+route: /demo/ShowMoreText
+---
+
+import { Playground } from "docz";
+import ShowMoreText, { rehydrator } from "./components/ShowMoreText"
+import MarkupContainer from "./components/MarkupContainer"
+
+# ShowMoreText
+
+Demonstrates rehydrating a simple string prop.
+
+A more advanced version, which rehydrates complex DOM nodes, can be seen in the [`ShowMore` demo](/demos/ShowMore).
+
+<Playground>
+  <MarkupContainer rehydrators={{ShowMoreText: rehydrator}} options={{}}>
+    <ShowMoreText content="Hello, world!" />
+  </MarkupContainer>
+</Playground>

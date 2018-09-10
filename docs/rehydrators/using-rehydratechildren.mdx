@@ -1,0 +1,30 @@
+---
+name: Using rehydrateChildren
+
+menu: Rehydrators
+order: 8
+---
+
+# Using rehydrateChildren
+
+> A working version of this can be seen in the [`ShowMore` demo](/demo/ShowMore)
+
+Let's take [our `ShowMore` component](/rehydrators/simple), and enhance it.
+
+Instead of hiding or showing a `content` string, we want to hide or show some `children`, which can be arbitrary React elements. To accomplish this, we can use the `rehydrateChildren` function, which is always passed as the second argument to a rehydrator.
+
+`rehydrateChildren` accepts a DOM node as its only argument, and - importantly - will return its _children_ as React elements. Passing in `<div><p>Hello, world!</p></div>`, for example, will only return `<p>Hello, world!</p>`.
+
+`rehydrateChildren` returns a `Promise` - this is important to accomodate code splitting. You should always `await` it, or use `.then()`.
+
+The rehydrator should look like this:
+
+```javascript
+import ShowMore from "./ShowMore";
+
+export default async (domNode, rehydrateChildren) => {
+  const children = await rehydrateChildren(domNode.querySelector(".ShowMore-children"));
+
+  return <ShowMore>{children}</ShowMore>;
+}
+```

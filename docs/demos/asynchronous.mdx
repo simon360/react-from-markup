@@ -1,0 +1,32 @@
+---
+name: Asynchronous Rehydrators
+
+menu: Demos
+order: 2
+route: /demo/async
+---
+
+import { Playground } from "docz";
+import AsynchronousRehydrator, { rehydrator } from "./components/AsynchronousRehydrator"
+import MarkupContainer from "./components/MarkupContainer"
+
+# Asynchronous Rehydrators
+
+This demo is meant to demonstrate how asynchronous rehydration works.
+
+It also demonstrates how a rehydrator can _change_ an element - before rehydration, the `AsynchronousRehydrator` element shows how long it will take to rehydrate, but after rehydration, it simply tells you that it's compelted rehydration.
+
+The `separateContainers` prop on `MarkupContainer` can be set to false, to demonstrate the benefits of having multiple containers on your page. If each `AsynchronousRehydrator` is wrapped in a single container, rehydration will only complete when _all_ rehydrators have finished running, but when they're each in a separate container, they render independently.
+
+While you wouldn't ever write a rehydrator using an intentional delay in a real site, it's a useful demo of how `import()` _could_ work in your bundles with `react-from-markup`.
+
+<Playground>
+  <MarkupContainer rehydrators={{AsynchronousRehydrator: rehydrator}} options={{}} separateContainers={true}>
+    <AsynchronousRehydrator delay={5000} />
+    <AsynchronousRehydrator delay={100} />
+    <AsynchronousRehydrator delay={10000} />
+    <AsynchronousRehydrator delay={2500} />
+    <AsynchronousRehydrator delay={500} />
+    <AsynchronousRehydrator delay={7500} />
+  </MarkupContainer>
+</Playground>

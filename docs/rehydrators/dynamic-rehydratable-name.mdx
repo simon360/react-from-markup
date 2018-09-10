@@ -1,0 +1,31 @@
+---
+name: Determining data-rehydratable-name
+
+menu: Rehydrators
+order: 2
+---
+
+# Determining data-rehydratable-name from the markup
+
+In the previous examples, you'll notice that the `data-rehydratable-name` needs to exist in three places: inside your component definition, in the markup that you integrate into your templates, and as a key in the list of rehydrators you pass to `react-from-markup`.
+
+You could decouple your components from your implementation by having a `rehydratableName` prop, and reading the `data-rehydratable-name` prop in your rehydrator.
+
+```javascript
+import ShowMore from "./ShowMore";
+
+// Modify <ShowMore /> so that its data-rehydratable-name prop looks like
+//   data-rehydratable-name={this.props.rehydratableName}
+// It might be useful to have a `defaultProps` value set, as well.
+
+export default async (domNode) => {
+  const props = {
+    rehydratableName: domNode.getAttribute("data-rehydratable-name")
+  };
+  const children = await rehydrateChildren(domNode.querySelector(".ShowMore-children"));
+
+  return <ShowMore {...props}>{children}</ShowMore>
+};
+```
+
+By determining the rehydratable name in this way, only your templates and your call to `rehydrate` need to match. This could enable you to namespace your rehydratable names (for example, `mainSite-ShowMore`), without hard-coding the namespace into your components themselves.

@@ -1,0 +1,35 @@
+---
+name: ShowMore
+
+menu: Demos
+order: 6
+route: /demo/ShowMore
+---
+
+import { Playground } from "docz";
+import HelloUser, { rehydrator as helloUserRehydrator } from "./components/HelloUser";
+import ShowMore, { rehydrator } from "./components/ShowMore";
+import MarkupContainer from "./components/MarkupContainer"
+
+# ShowMore
+
+Demonstrates rehydrating a component that has arbitrary children.
+
+<Playground>
+  <MarkupContainer 
+    rehydrators={{
+      HelloUser: helloUserRehydrator, 
+      ShowMore: rehydrator
+    }} 
+    options={{
+      extra: { 
+        userName: "John Smith"
+      }
+    }}
+  >
+    <ShowMore>
+      <p>I can contain <b>complex</b> <em>DOM structures</em>. I can even contain other rehydratable components.</p>
+      <HelloUser userName="" />
+    </ShowMore>
+  </MarkupContainer>
+</Playground>

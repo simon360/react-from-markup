@@ -1,0 +1,99 @@
+---
+name: A simple rehydrator
+
+order: 10
+menu: Rehydrators
+route: /rehydrators/simple
+---
+
+# A simple rehydrator
+
+> A working version of this can be seen in the [`ShowMoreText` demo](/demo/ShowMoreText)
+
+The simplest rehydrators work on _leaf components_ - in other words, a React component that doesn't use `this.props.children`.
+
+Suppose you had a component called `ShowMore`, which would hide or show a prop called `content` when a button is clicked.
+
+```jsx
+<ShowMore content="Hello, world!" />
+```
+
+The component definition might look like this:
+
+```javascript
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+export default class ShowMore extends Component {
+  state = {
+    open: false
+  }
+
+  toggleOpen = () => {
+    this.setState({
+      open: !this.state.open
+    })
+  }
+
+  render() {
+    const { content } = this.props;
+    const { open } = this.state;
+
+    return (
+      <div 
+        className="ShowMore"
+        data-rehydratable="ShowMore" 
+        data-content={content}
+      >
+        <button onClick={this.toggleOpen}>Show more</button>
+        <p className="ShowMore-content" style={{ display: open ? "block" : "none" }}>{content}</p>
+      </div>
+    );
+  }
+}
+```
+
+The rehydrator for this is simply a function that reads an element where `data-rehydratable === "ShowMore"`, and returna a React element, using the `data-` attributes to derive the right `props`. It would look something like this:
+
+```javascript
+import ShowMore from "./ShowMore";
+
+export default async domNode => {
+  const props = {
+    content: domNode.getAttribute("data-content")
+  };
+
+  return <ShowMore {...props} />;
+}
+```
+
+
+In order to use this rehydrator, put it inside a [markup container](/containers) and pass it to `react-from-markup` when your page loads:
+
+```javascript
+import rehydrate from "react-from-markup";
+import showMoreRehydrator from "./components/ShowMore/rehydrator";
+
+rehydrate(document.getElementById("root"), {
+  ShowMore: showMoreRehydrator
+});
+```
+
+## Avoiding duplication
+
+In the above example, the `content` prop exists in two places: in the `data-content` attribute, and inside the `<p>` element.
+
+If you wanted to avoid this, you could read the `innerText` of the `p` instead, and get rid of the `data-content` attribute altogether:
+
+```javascript
+import ShowMore from "./ShowMore";
+
+export default async domNode => {
+  const props = {
+    content: domNode.querySelector(".ShowMore-content").innerText
+  };
+
+  return <ShowMore {...props} />;
+}
+```
+

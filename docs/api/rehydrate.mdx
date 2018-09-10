@@ -1,0 +1,55 @@
+---
+name: rehydrate()
+
+menu: API
+route: /api/rehydrate
+---
+
+# The rehydrate function
+
+```javascript
+rehydrate(rootNode, rehydrators, options);
+```
+
+## Contract
+
+When run, `rehydrate` will convert the contents of any [markup containers](/containers) into React elements.
+
+## Parameters
+
+* `rootNode`: a node on your page where `react-from-markup` should start looking for markup containers.
+
+  A simple implementation would have the first child of your `<body />` element be a `<div id="root" />`, and put all your markup inside. Then, you can use `document.getElementById("root")` as your `rootNode`.
+* `rehydrators`: a keyed object containing your rehydrator functions, each matching the [rehydrator interface](/api/rehydrator)
+
+  A key of `SiteHeader` means that the provided rehydrator will be run for an element with `data-rehydratable="SiteHeader"` set.
+* `options`: an object that configures `rehydrate()`
+  * `extra`: an object that will be passed to each [rehydrator](/api/rehydrator). Can be used to provide some page state information to your components, such as user information or analytics hooks.
+
+## Return value
+
+Returns a `Promise` that resolves when `rootNode` has been rehydrated.
+
+## Example usage
+
+```javascript
+import rehydrate from "react-from-markup";
+import { rehydrator as siteHeaderRehydrator } from "./components/SiteHeader";
+import { rehydrator as videoPlayerRehydrator } from "./components/VideoPlayer";
+
+rehydrate(
+  document.getElementById("root"),
+  {
+    SiteHeader: siteHeaderRehydrator,
+    VideoPlayer: videoPlayerRehydrator
+  },
+  {
+    extra: {
+      user: {
+        userName: document.body.dataset.userName,
+        userId: document.body.dataset.userId
+      }
+    }
+  }
+)
+```

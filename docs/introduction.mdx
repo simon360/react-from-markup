@@ -1,0 +1,47 @@
+---
+name: Introduction
+
+order: 10
+route: /
+---
+
+# Introduction
+
+`react-from-markup` lets you declare React components using simple, static markup.
+
+## Why?
+
+Sometimes, your tech stack doesn’t speak JavaScript very well.
+
+This can be a particular problem with some CMS, or legacy systems. React is a JavaScript library, and oftentimes, it’s difficult to create the bootstrapping JavaScript from your templating system. These systems want to speak in markup, and making them work another way might be more challenging than it's worth.
+
+`react-from-markup` is intended to make it possible to use React components on these legacy systems, _without changing the way you write your React components_. It provides tools to simplify the mapping from `data-` attributes into React props, and _can even handle React children_.
+
+The result: React can be used to build a component library, useable by other React apps, and you don’t need to write a second component library for your legacy systems, or a second set of non-React JavaScript. You just need to integrate new markup into your non-React templates, and run a script on page load to initialize.
+
+## How?
+
+`react-from-markup` introduces two concepts: **rehydrators** and **markup containers**.
+
+When `react-from-markup` runs, it searches for every markup container on the page, and replace each container's contents with a React version that is equivalent. By default, it will simply replace elements with static React versions - in other words, this markup:
+
+```html
+<div data-react-from-markup-container>
+  <p class="hello-world">Hello, world!</p>
+</div>
+```
+
+would result in:
+
+```javascript
+ReactDOM.render(
+  React.createElement("p", { className: "hello-world" }, "Hello, world!"),
+  container
+);
+```
+
+This works recursively, so you can use `react-from-markup` on complex DOM trees. It even works with SVGs.
+
+This only becomes useful when using _rehydrators_. Whenever `react-from-markup` encounters an element with a `data-rehydratable` attribute, it will run a rehydrator, which is usually a small bootstrapping function written alongside a React component. Normally, a rehydrator would read some `data-` attributes from the element, and pass them as props to a React component. Rehydrators can also convert the _children_ of an element into React elements, and pass them to the React component.
+
+Each markup container is parsed independently and asynchronously.

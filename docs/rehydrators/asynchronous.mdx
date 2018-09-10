@@ -1,0 +1,53 @@
+---
+name: Asynchronous rehydrators
+
+menu: Rehydrators
+order: 4
+---
+
+# Asynchronous rehydrators
+
+> You may find the [`AsynchronousRehydrator` demo](/demo/AsynchronousRehydrator) useful to see how this works.
+
+Rehydrators are expected to use `Promise`s. The main reason for this is to make use of the `import()` function, which is available in many module bundlers like `webpack`. It can help to keep your initial bundle size small, and only load component code as you need it.
+
+There are two places where this may be appropriate: during rehydration, or during configuration.
+
+## During rehydration
+
+Your rehydrator can use `import()`, instead of declaring its `import`s at the top of the file. Using the `HelloUser` example, it could be modified to this:
+
+```javascript
+export default async (domNode, rehydrateChildren, { userName }) => {
+  const HelloUser = (await import("./HelloUser")).default;
+
+  return <HelloUser userName={userName} />;
+};
+```
+
+`webpack` would be able to split `HelloUser.js` into a separate file, and only load it if a `HelloUser` rehydratable is found on the page.
+
+## During configuration
+
+It's not always possible to use `import()` inside the rehydrator. If you publish your components to NPM, for example, you might not want to include calls to `import()`, because it's not a function that's widely understood by browsers yet. It's an implementation-specific hook for module bundlers.
+
+You can also save a few extra kilobytes on page load by moving your `import()` call further up the call stack, because then your rehydrators can be split off, too.
+
+Regardless of your reasoning, it's entirely possible to use `import()` when you call `rehydrate()`. It would look something like this:
+
+```javascript
+import rehydrate from "react-from-markup";
+
+rehydrate(
+  document.getElementById("root"),
+  {
+    HelloUser: async (...args) => (await import("./components/HelloUser/rehydrator")).default(...args),
+    ShowMore: async (...args) => (await import("./components/ShowMore/rehydrator")).default(...args)
+  },
+  {
+    extra: {
+      userName: Cookies.get("user_name")
+    }
+  }
+);
+```

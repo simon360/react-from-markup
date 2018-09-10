@@ -1,0 +1,24 @@
+---
+name: HelloUser
+
+menu: Demos
+order: 4
+route: /demo/HelloUser
+---
+
+import { Playground } from "docz";
+import HelloUser, { rehydrator } from "./components/HelloUser"
+import MarkupContainer from "./components/MarkupContainer"
+
+# HelloUser, using extra
+
+Demonstrates the use of `extra` to pass a user's name to a rehydrated component.
+
+<Playground>
+  <MarkupContainer rehydrators={{HelloUser: rehydrator}} options={{extra: {userName: "John Smith"}}}>
+    <p>This will greet the user, whose name is passed to the rehydrator in the extra parameter.</p>
+
+    {/* The userName is a temporary value - it will be replaced using `extra` when the rehydrator runs. */}
+    <HelloUser userName="" />
+  </MarkupContainer>
+</Playground>

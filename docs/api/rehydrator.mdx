@@ -1,0 +1,92 @@
+---
+name: Rehydrator Interface
+
+menu: API
+route: /api/rehydrator
+---
+
+# Rehydrator Interface
+
+```javascript
+async (domNode, rehydrateChildren, extra) => <Element />
+```
+
+Your rehydrators should be written to this API.
+
+## Contract
+
+Given `domNode`, a rehydrator will return an equivalent React element.
+
+## Parameters
+
+* `domNode`: an element that has matched this rehydrator.
+* `rehydrateChildren`: a function (returning a `Promise`) that can be used to rehydrate any child nodes that contain arbitrary markup.
+* `extra`: page state information, from [`rehydrate()`'s `options` parameter](/api/rehydrate#parameters).
+
+## Return value
+
+A React element that represents `domNode`.
+
+## Example usage
+
+
+`index.js`:
+```javascript
+export { default } from "./SiteHeader";
+export { default as rehydrator } from "./rehydrator";
+```
+
+`rehydrator.js`:
+```javascript
+import Banner from "./Banner";
+
+export default async (domNode, rehydrateChildren, extra) => {
+  const children = await rehydrateChildren(domNode.querySelector(".Banner-children"));
+
+  const props = {
+    open: !extra.user.hasSeenBanner,
+    title: domNode.querySelector(".Banner-title").innerText
+  }
+
+  return <Banner {...props}>{children}</Banner>;
+}
+```
+
+`Banner.js`:
+```javascript
+import React from "react";
+import PropTypes from "prop-types";
+
+class Banner extends React.Component {
+  static propTypes = {
+    children: PropTypes.node,
+    hasBeenSeen: PropTypes.bool,
+    title: PropTypes.string
+  };
+
+  state = {
+    open: true
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    // Only show the banner if it hasn't been seen on previous pages, and it 
+    // hasn't been closed on this page.
+    return {
+      open: !props.hasBeenSeen && state.open
+    };
+  }
+
+  render() {
+    const { children } = this.props;
+    const { open } = this.state;
+
+    return <div className={`Banner${open ? " is-open" : ""}`}>
+        <h1 className="Banner-title">{title}</h1>
+        <div className="Banner-children">{children}</div>
+        <button onClick={() => this.setState({ open: false })}>Close banner</button>
+      </div>;
+  }
+}
+
+export default Banner;
+```

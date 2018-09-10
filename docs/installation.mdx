@@ -1,0 +1,24 @@
+---
+name: Installation
+
+order: 8
+route: /installation
+---
+
+# Installation
+
+Install `react-from-markup`:
+
+```shell
+yarn add react react-dom react-from-markup
+```
+
+Then, when your page loads, use it to rehydrate your page.
+
+```javascript
+import rehydrate from "react-from-markup";
+
+rehydrate(document.getElementById("root"), {});
+```
+
+This will rehydrate any [markup containers](/containers) on your page - but in order to do anything useful, you'll want to specify some [rehydrators](/rehydrators).

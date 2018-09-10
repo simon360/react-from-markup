@@ -1,0 +1,15 @@
+---
+name: How these demos work
+
+menu: Demos
+order: 20
+route: /demo/introduction
+---
+
+# How these demos work
+
+Each demo is wrapped in a `MarkupContainer`. This is a special component that was written for these docs. It runs `react-from-markup` any time its children change.
+
+`MarkupContainer` accepts two props, `rehydrators` and `options`, which map to the [`rehydrators` and `options` parameters on `rehydrate`](/api/rehydrate).
+
+Each demo has some sample code, which can be edited in place to see its effects.

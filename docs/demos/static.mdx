@@ -1,0 +1,21 @@
+---
+name: Static
+
+menu: Demos
+order: 10
+route: /demo/static
+---
+
+import { Playground } from "docz";
+import MarkupContainer from "./components/MarkupContainer"
+
+# Static rehydration demo
+
+Demonstrates rehydrating some static markup into static React elements.
+
+<Playground>
+  <MarkupContainer rehydrators={{}}>
+    <p>I'll be rehydrated, but I won't be interactive.</p>
+    <p>react-from-markup only really gets useful when interactive rehydrators get involved.</p>
+  </MarkupContainer>
+</Playground>
