@@ -4,7 +4,9 @@ import { boolean, nameMap } from "./attributes";
 import { IAttributeList } from "./IAttributeList";
 import specialElementHandlers from "./specialElementHandlers";
 
-export type StaticToReactElementRecursor = (el: Node) => React.ReactNode;
+export type StaticToReactElementRecursor = (
+  el: Node
+) => Promise<React.ReactNode>;
 
 const mapAttributeToReact = (attributeName: string) => {
   return nameMap[attributeName.toLowerCase()] || attributeName.toLowerCase();
@@ -25,7 +27,7 @@ const bootstrapStyles = (attributes: IAttributeList): IAttributeList => ({
   style: undefined
 });
 
-export default (el: Element, recursor: StaticToReactElementRecursor) => {
+export default async (el: Element, recursor: StaticToReactElementRecursor) => {
   const tagName = el.tagName.toLowerCase();
   let attributes: IAttributeList = {};
 
@@ -63,11 +65,9 @@ export default (el: Element, recursor: StaticToReactElementRecursor) => {
   // <textarea>'s children will be replaced with the content of its value
   // property, so we should skip parsing them.
   if (tagName !== "textarea" && el.childNodes) {
-    return React.createElement(
-      tagName,
-      attributes,
-      ...Array.from(el.childNodes).map(recursor)
-    );
+    const children = await Promise.all(Array.from(el.childNodes).map(recursor));
+
+    return React.createElement(tagName, attributes, ...children);
   }
 
   return React.createElement(tagName, attributes);

@@ -3,25 +3,27 @@ import staticToReactElement, {
   StaticToReactElementRecursor
 } from "./staticToReactElement";
 
-export type CustomElementHandlerType = (el: Element) => React.ReactNode | false;
+export type CustomElementHandlerType = (
+  el: Element
+) => Promise<React.ReactNode | false>;
 
 const convertText = (el: Text): string =>
   // Text node - no need to convert, just return the text.
   el.data;
 
-const convertElement = (
+const convertElement = async (
   el: Element,
   customElementHandler: CustomElementHandlerType,
   recursor: StaticToReactElementRecursor
-): React.ReactNode =>
+): Promise<React.ReactNode> =>
   // If customElementHandler is truthy, use it; otherwise, just convert to a React element.
-  customElementHandler(el) || staticToReactElement(el, recursor);
+  (await customElementHandler(el)) || staticToReactElement(el, recursor);
 
-const convert = (
+const convert = async (
   el: Node,
   customElementHandler: CustomElementHandlerType
-): React.ReactNode | string | null => {
-  const recursor: StaticToReactElementRecursor = (innerEl: Node) =>
+): Promise<React.ReactNode | string | null> => {
+  const recursor: StaticToReactElementRecursor = async (innerEl: Node) =>
     convert(innerEl, customElementHandler);
 
   if (el.nodeType === Node.TEXT_NODE) {

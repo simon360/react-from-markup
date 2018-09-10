@@ -24,7 +24,7 @@ const registerRehydrator = (rehydrator: IRehydrator) => {
   }
 };
 
-const rehydratableToReactElement = (el: Element) => {
+const rehydratableToReactElement = async (el: Element) => {
   const rehydratorName = el.getAttribute("data-rehydratable");
   const rehydrator = registeredRehydrators.find(r => r.name === rehydratorName);
 
@@ -35,7 +35,7 @@ const rehydratableToReactElement = (el: Element) => {
   return rehydrator.elementToReact(el);
 };
 
-const customHandler = (node: Node) => {
+const customHandler = async (node: Node) => {
   // This function will run on _every_ node that domElementToReact encounters.
   // Make sure to keep the conditional highly performant.
   if (
@@ -48,7 +48,7 @@ const customHandler = (node: Node) => {
   return false;
 };
 
-export default (container: Element) => {
+export default async (container: Element) => {
   const roots = Array.from(
     container.querySelectorAll("[data-react-from-markup-container]")
   );
@@ -57,7 +57,7 @@ export default (container: Element) => {
     // It's possible that this root was detached by a previous render in this loop
     if (container.contains(root)) {
       try {
-        const rehydrated = domElementToReact(root, customHandler);
+        const rehydrated = await domElementToReact(root, customHandler);
 
         // Unmount; it's possible that this was rehydrated previously.
         ReactDOM.unmountComponentAtNode(root);
