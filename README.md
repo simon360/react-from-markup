@@ -225,7 +225,7 @@ Rehydration regions are crucial: without them, `ReactDOM.render` wouldn’t have
 
 ### CSS and Stylesheets
 
-Your CSS and class names should be reasonably stable from release to release. Frameworks like `styled-ccomponents` generate hashes for their class names, which can result in a lot of markup changes. Every markup change will need to be implemented in your legacy systems’ templates. Using BEM or SUITCSS in your class naming, and maintaining normal CSS files rather than CSS-in-JS, will likely be easier to maintain.
+Your CSS and class names should be reasonably stable from release to release. Frameworks like `styled-components` generate hashes for their class names, which can result in a lot of markup changes. Every markup change will need to be implemented in your legacy systems’ templates. Using BEM or SUITCSS in your class naming, and maintaining normal CSS files rather than CSS-in-JS, will likely be easier to maintain.
 
 ### Communication between rehydrated components
 
