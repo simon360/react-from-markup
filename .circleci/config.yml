@@ -70,7 +70,7 @@ workflows:
       - deploy_packages:
           requires:
             - build
-            - test
+            # - test
             - lint
           filters:
             tags:
