@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "compile": "lerna run compile",
+    "deploy": "yarn docz:build && gh-pages -d .docz/dist",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "postinstall": "npm-run-all compile",
@@ -24,6 +25,7 @@
     "@types/react": "^16.4.13",
     "@types/react-dom": "^16.0.7",
     "docz": "^0.11.2",
+    "gh-pages": "^2.0.0",
     "jest": "^23.5.0",
     "lerna": "^3.1.1",
     "npm-run-all": "^4.1.3",
