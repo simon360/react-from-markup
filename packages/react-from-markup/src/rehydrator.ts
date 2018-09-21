@@ -106,4 +106,4 @@ export default async (
   await Promise.all(renders.map(r => r().then(render)));
 };
 
-export { IRehydrator, rehydratableToReactElement };
+export { IRehydrator, rehydratableToReactElement, rehydrateChildren };
