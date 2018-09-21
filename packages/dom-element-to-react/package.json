@@ -1,6 +1,6 @@
 {
   "name": "dom-element-to-react",
-  "version": "2.0.0-pre.1",
+  "version": "2.0.0-pre.2",
   "description": "Convert the children of a node to React elements",
   "main": "lib/index.js",
   "author": "Simon Andrews <me@simonandrews.ca>",
