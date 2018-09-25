@@ -1,14 +1,14 @@
 {
-  "vendors.js": "/react-from-markup/static/js/vendors.c32f5e5a.js",
+  "vendors.js": "/react-from-markup/static/js/vendors.8d52ce7d.js",
   "app.js": "/react-from-markup/static/js/app.11ae114d.js",
   "docs-containers.js": "/react-from-markup/static/js/docs-containers.a6c26518.js",
   "docs-installation.js": "/react-from-markup/static/js/docs-installation.03a47985.js",
-  "docs-introduction.js": "/react-from-markup/static/js/docs-introduction.2db4cbef.js",
+  "docs-introduction.js": "/react-from-markup/static/js/docs-introduction.519bf86f.js",
   "docs-api-rehydrate.js": "/react-from-markup/static/js/docs-api-rehydrate.8791b418.js",
   "docs-api-rehydrator.js": "/react-from-markup/static/js/docs-api-rehydrator.0307d3ef.js",
   "docs-demos-hello-user.js": "/react-from-markup/static/js/docs-demos-hello-user.70b0103f.js",
   "docs-demos-show-more.js": "/react-from-markup/static/js/docs-demos-show-more.570e3188.js",
-  "docs-demos-show-more-text.js": "/react-from-markup/static/js/docs-demos-show-more-text.e11f1d66.js",
+  "docs-demos-show-more-text.js": "/react-from-markup/static/js/docs-demos-show-more-text.2fa0fdbf.js",
   "docs-demos-asynchronous.js": "/react-from-markup/static/js/docs-demos-asynchronous.155dd4fd.js",
   "docs-demos-demo-introduction.js": "/react-from-markup/static/js/docs-demos-demo-introduction.4e95634a.js",
   "docs-demos-static.js": "/react-from-markup/static/js/docs-demos-static.449357d8.js",
@@ -18,6 +18,6 @@
   "docs-rehydrators-simple.js": "/react-from-markup/static/js/docs-rehydrators-simple.37d0a5b6.js",
   "docs-rehydrators-using-extra.js": "/react-from-markup/static/js/docs-rehydrators-using-extra.fcd89568.js",
   "docs-rehydrators-using-rehydratechildren.js": "/react-from-markup/static/js/docs-rehydrators-using-rehydratechildren.43fdc05e.js",
-  "runtime~app.js": "/react-from-markup/static/js/runtime~app.edd40c5e184eb0f4f8f4.js",
+  "runtime~app.js": "/react-from-markup/static/js/runtime~app.d73d7715a3e1eb7ac89e.js",
   "index.html": "/react-from-markup/index.html"
 }
