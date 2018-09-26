@@ -23,8 +23,81 @@ The rehydrator should look like this:
 import ShowMore from "./ShowMore";
 
 export default async (domNode, rehydrateChildren) => {
-  const children = await rehydrateChildren(domNode.querySelector(".ShowMore-children"));
+  const children = await rehydrateChildren(
+    domNode.querySelector(".ShowMore-children")
+  );
 
   return <ShowMore>{children}</ShowMore>;
-}
+};
 ```
+
+## `rehydrateChildren` and `React.Fragment`
+
+If a component contains more than one child, then `rehydrateChildren` will return a `React.Fragment`. This may affect your components if you use `React.Children`, in order to iterate over child components from a parent component.
+
+To overcome this, you have two options:
+
+1. In your rehydrator function, you can check the type of the children you get back. If it's a `React.Fragment`, you can pass through its children. This isn't generally recommended, but it will work in a pinch.
+
+  ```javascript
+  (domNode, rehydrateChildren) => {
+    const children = await rehydrateChildren(domNode.querySelector(".MyComponent-children"));
+
+    if (children.type === React.Fragment) {
+      return <MyComponent>{children.props.children}</MyComponent>;
+    }
+
+    return <MyComponent>{children}</MyComponent>
+  }
+  ```
+
+2. Unwrap `React.Fragment` while you iterate over children. This has the added advantage of making your component work with fragments, rather than patching support into the rehydrator.
+
+  ```javascript
+  const getTitles = children => {
+    const titles = [];
+
+    React.Children.forEach(children, child => {
+      if (child.type === React.Fragment) {
+        // Recursively unwrap `React.Fragment`'s children, get their titles,
+        // and add them to the return value.
+        titles.push(...getTitles(child.props.children));
+      } else if (child.type === MySubcomponent) {
+        // For a specific component type, extract the title prop.
+        titles.push(child.props.title);
+      }
+    });
+
+    return titles;
+  };
+  ```
+
+  You could extend this to `cloneElement`, as well.
+
+  ```javascript
+  const getTitles = children => {
+    const titles = [];
+
+    const mapCallback = child => {
+      if (child.type === React.Fragment) {
+        return (
+          <React.Fragment>
+            {React.Children.map(child.props.children, mapCallback)}
+          </React.Fragment>
+        );
+      }
+
+      if (child.type === MySubcomponent) {
+        return React.cloneElement(
+          child,
+          { date: new Date() },
+          child.props.children
+        );
+      }
+
+      return child;
+    };
+
+    return React.Children.map(children, mapCallback);
+  };
+  ```
