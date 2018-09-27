@@ -14,7 +14,7 @@ The result: React can be used to build a component library, useable by other Rea
 
 ## Notable uses
 
-- Thomson Reuters uses `react-from-markup` on its Enterprise Web Platform. It runs on Adobe Experience Manager and HTL, and powers thomsonreuters.com, business unit sites, and campaign pages. It’s also used on their blog network, a WordPress-based platform of blogs. The same React-based component library is able to back each platform, and is also used in several non-`react-from-markup` sites that were able to use React directly, such as the [2017 Annual Report](https://ar.tr.com).
+- Thomson Reuters uses `react-from-markup` on its Enterprise Web Platform. It runs on Adobe Experience Manager and HTL, and powers thomsonreuters.com, business unit sites, and campaign pages. It’s also used on their blog network, a WordPress-based platform of blogs. The same React-based component library is able to back each platform, and is also used in several non-`react-from-markup` sites that were able to use React directly, such as the [2017 Annual Report](http://ar.tr.com).
 
 ## Documentation
 
