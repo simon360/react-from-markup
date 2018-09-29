@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "10"
+
+script:
+  - yarn compile
+  - yarn docz:build
+
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: true
+    local-dir: .docz/dist
+    on:
+      branch: master
+  - provider: script
+    script: bash scripts/publish.sh
+    skip-cleanup: true
+    on:
+      tags: true
