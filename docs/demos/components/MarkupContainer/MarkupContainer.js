@@ -58,10 +58,11 @@ class MarkupContainer extends React.Component {
 
     return (
       <div ref={this.mainRef}>
-        {markup.map((__html, i) => (
+        {markup.map((node, i) => (
           <div
-            data-react-from-markup-container
-            dangerouslySetInnerHTML={{ __html }}
+            dangerouslySetInnerHTML={{
+              __html: `<div data-react-from-markup-container>${node}</div>`
+            }}
             key={i}
           />
         ))}
