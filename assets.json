@@ -1,5 +1,5 @@
 {
-  "vendors.js": "/react-from-markup/static/js/vendors.118fcf28.js",
+  "vendors.js": "/react-from-markup/static/js/vendors.0c2c1a57.js",
   "app.js": "/react-from-markup/static/js/app.e145f7c6.js",
   "docs-containers.js": "/react-from-markup/static/js/docs-containers.a6c26518.js",
   "docs-installation.js": "/react-from-markup/static/js/docs-installation.03a47985.js",
@@ -9,7 +9,7 @@
   "docs-demos-hello-user.js": "/react-from-markup/static/js/docs-demos-hello-user.70b0103f.js",
   "docs-demos-show-more.js": "/react-from-markup/static/js/docs-demos-show-more.570e3188.js",
   "docs-demos-show-more-text.js": "/react-from-markup/static/js/docs-demos-show-more-text.2fa0fdbf.js",
-  "docs-demos-asynchronous.js": "/react-from-markup/static/js/docs-demos-asynchronous.155dd4fd.js",
+  "docs-demos-asynchronous.js": "/react-from-markup/static/js/docs-demos-asynchronous.f812b93a.js",
   "docs-demos-demo-introduction.js": "/react-from-markup/static/js/docs-demos-demo-introduction.4e95634a.js",
   "docs-demos-static.js": "/react-from-markup/static/js/docs-demos-static.449357d8.js",
   "docs-rehydrators-asynchronous.js": "/react-from-markup/static/js/docs-rehydrators-asynchronous.5d825ef5.js",
@@ -18,6 +18,6 @@
   "docs-rehydrators-simple.js": "/react-from-markup/static/js/docs-rehydrators-simple.37d0a5b6.js",
   "docs-rehydrators-using-extra.js": "/react-from-markup/static/js/docs-rehydrators-using-extra.fcd89568.js",
   "docs-rehydrators-using-rehydratechildren.js": "/react-from-markup/static/js/docs-rehydrators-using-rehydratechildren.47662cd4.js",
-  "runtime~app.js": "/react-from-markup/static/js/runtime~app.d6cbcb38a7462bc248db.js",
+  "runtime~app.js": "/react-from-markup/static/js/runtime~app.95723a2fa25666da94ec.js",
   "index.html": "/react-from-markup/index.html"
 }
