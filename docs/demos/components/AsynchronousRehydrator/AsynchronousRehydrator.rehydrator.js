@@ -10,8 +10,6 @@ const delayBy = delay => {
 export default async domNode => {
   const delay = domNode.getAttribute("data-delay");
 
-  console.log(delay);
-
   await delayBy(parseInt(delay));
 
   return <AsynchronousRehydrator isRehydrating={true} />;
