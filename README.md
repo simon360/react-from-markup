@@ -1,5 +1,7 @@
 # React from Markup
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/simon360/react-from-markup.svg)](https://greenkeeper.io/)
+
 > Declare your React components with static HTML
 
 ## Why?
