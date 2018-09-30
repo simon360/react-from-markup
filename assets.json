@@ -1,6 +1,6 @@
 {
   "vendors.js": "/react-from-markup/static/js/vendors.118fcf28.js",
-  "app.js": "/react-from-markup/static/js/app.11ae114d.js",
+  "app.js": "/react-from-markup/static/js/app.e145f7c6.js",
   "docs-containers.js": "/react-from-markup/static/js/docs-containers.a6c26518.js",
   "docs-installation.js": "/react-from-markup/static/js/docs-installation.03a47985.js",
   "docs-introduction.js": "/react-from-markup/static/js/docs-introduction.519bf86f.js",
@@ -17,7 +17,7 @@
   "docs-rehydrators-introduction.js": "/react-from-markup/static/js/docs-rehydrators-introduction.9ed5cb87.js",
   "docs-rehydrators-simple.js": "/react-from-markup/static/js/docs-rehydrators-simple.37d0a5b6.js",
   "docs-rehydrators-using-extra.js": "/react-from-markup/static/js/docs-rehydrators-using-extra.fcd89568.js",
-  "docs-rehydrators-using-rehydratechildren.js": "/react-from-markup/static/js/docs-rehydrators-using-rehydratechildren.43fdc05e.js",
-  "runtime~app.js": "/react-from-markup/static/js/runtime~app.2a3cc783d30bf1af8b38.js",
+  "docs-rehydrators-using-rehydratechildren.js": "/react-from-markup/static/js/docs-rehydrators-using-rehydratechildren.47662cd4.js",
+  "runtime~app.js": "/react-from-markup/static/js/runtime~app.d6cbcb38a7462bc248db.js",
   "index.html": "/react-from-markup/index.html"
 }
