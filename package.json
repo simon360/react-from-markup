@@ -15,7 +15,7 @@
     "lint:ts": "tslint -c tslint.json './packages/**/*.ts*(x)'",
     "release": "lerna version prerelease",
     "pretest": "npm-run-all lint",
-    "test": "echo \"Tests coming soon. I'm aware that's not ideal.\""
+    "test": "jest"
   },
   "dependencies": {
     "react": "^16.5.0",
