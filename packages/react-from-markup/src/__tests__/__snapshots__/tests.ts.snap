@@ -6,3 +6,14 @@ exports[`reactFromMarkupContainer E2E tests Should rehydrate a basic component 1
         <span testid=\\"myComponent\\">rehydrated component</span>
       </div>"
 `;
+
+exports[`reactFromMarkupContainer E2E tests Should rehydrate valid HTML markup 1`] = `
+"
+    <div data-react-from-markup-container=\\"\\">
+      <p style=\\"\\">paragraph</p>
+      <p>paragraph</p>
+      <p>paragraph</p>
+      <p>paragraph</p>
+      <p dangerouslysetinnerhtml=\\"{__html:'should not be children'}\\"></p>
+    </div>"
+`;

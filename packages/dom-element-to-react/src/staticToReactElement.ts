@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { boolean, nameMap } from "./attributes";
+import { boolean, nameMap, reservedMap } from "./attributes";
 import { IAttributeList } from "./IAttributeList";
 import specialElementHandlers from "./specialElementHandlers";
 
@@ -33,6 +33,7 @@ export default async (el: Element, recursor: StaticToReactElementRecursor) => {
 
   if (el.hasAttributes()) {
     attributes = Array.from(el.attributes)
+      .filter(({ name }) => !reservedMap.includes(name))
       .map(({ name, value }) => {
         if (boolean.includes(name) && value === "") {
           // React, and JavaScript, view "" as falsy. However, an empty string on
