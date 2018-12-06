@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reactFromMarkupContainer E2E tests Should rehydrate a basic component 1`] = `
+"
+      <div data-react-from-markup-container=\\"\\">
+        <span testid=\\"myComponent\\">rehydrated component</span>
+      </div>"
+`;
