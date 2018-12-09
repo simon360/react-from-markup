@@ -1,21 +1,110 @@
-# React from Markup
+# react-from-markup
 
-> Declare your React components with static HTML
+> Declare your React props with `data-` attributes
 
-## Why?
+## Intro
 
-Sometimes, your tech stack doesn’t speak JavaScript very well.
+`react-from-markup` converts this
 
-This can be a particular problem with some CMS, or legacy systems. React is a JavaScript library, and oftentimes, it’s difficult to create the bootstrapping JavaScript from your templating system.
+```html
+<div
+  data-rehydratable="ShowMore"
+  data-content="Hello, World!"
+>
+  Hello, World!
+</div>
+```
 
-`react-from-markup` is intended to make it possible to use React components on these legacy systems, _without changing the way you write your React components_. It provides tools to simplify the mapping from `data-` attributes into React props, and _can even handle React children_.
+into this
 
-The result: React can be used to build a component library, useable by other React apps, but you don’t need to write a second component library for your legacy systems, or a second set of non-React JavaScript. You just need to integrate new markup into your non-React templates, and run a script on page load to initialize.
+```jsx
+<ShowMore content="Hello, World!" />
+```
+
+using a _rehydrator_:
+
+```jsx
+import ShowMore from "./ShowMore";
+
+export default async domNode => {
+  return <ShowMore content={domNode.getAttribute("data-content")} />;
+};
+```
+
+This is extremely useful for changing React props in a non-React environment, like a CMS with its own templating language.
+
+## Features
+
+- Convert static markup into React components
+- Rehydrate React children
+- Asynchronous rehydration
+- Much more
+
+## Quick start
+
+Install `react-from-markup`
+
+```sh
+npm install react-from-markup --save
+```
+
+Annotate your component’s markup with `data-` attributes for each prop, and a `data-rehydratable` attribute to let `react-from-markup` identify your component.
+
+```jsx
+// components/ShowMore/index.jsx
+export default ({ content }) => {
+  <div data-content={content} data-rehydratable="ShowMore">
+    {content}
+  </div>;
+};
+```
+
+Write a rehydrator for your component, to describe how to map static data back to React props:
+
+```jsx
+// components/ShowMore/rehydrator.jsx
+import ShowMore from "./ShowMore";
+
+export default async domNode => {
+  return <ShowMore content={domNode.getAttribute("data-content")} />;
+};
+```
+
+Add your component to your page, wrapping it in a _markup-container_. `react-from-markup` will only rehydrate markup inside this.
+
+```html
+<!-- index.html -->
+<html>
+  <body>
+    <div id="root">
+      <div data-react-from-markup-container>
+        <div data-rehydratable="ShowMore" data-content="Hello, World">
+          Hello, World
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+```
+
+> Note, this markup could have been produced by React, using the `<ShowMore />` component.
+
+Run `react-from-markup` on page load.
+
+```js
+// index.js
+import rehydrate from "react-from-markup";
+import showMoreRehydrator from "./components/ShowMore/rehydrator";
+
+rehydrate(document.getElementById("root"), {
+  ShowMore: showMoreRehydrator
+});
+```
+
+## Full Documentation
+
+In-depth documentation can be found [here](https://simon360.github.io/react-from-markup).
 
 ## Notable uses
 
-- Thomson Reuters uses `react-from-markup` on its Enterprise Web Platform. It runs on Adobe Experience Manager and HTL, and powers thomsonreuters.com, business unit sites, and campaign pages. It’s also used on their blog network, a WordPress-based platform of blogs. The same React-based component library is able to back each platform, and is also used in several non-`react-from-markup` sites that were able to use React directly, such as the [2017 Annual Report](https://ar.tr.com).
-
-## Documentation
-
-In-depth documentation can be found [here](https://simon360.github.io/react-from-markup).
+- [Thomson Reuters](thomsonreuters.com) uses `react-from-markup` on its Enterprise Web Platform. It runs on Adobe Experience Manager and HTL, and powers thomsonreuters.com, business unit sites, and campaign pages. It’s also used on their blog network, a WordPress-based platform of blogs. The same React-based component library is able to back each platform, and is also used in several non-`react-from-markup` sites that were able to use React directly, such as the [2017 Annual Report](https://ar.tr.com).
