@@ -13,3 +13,14 @@ exports[`reactFromMarkupContainer E2E tests Should rehydrate valid HTML markup 1
       <p>paragraph</p>
     </div>"
 `;
+
+exports[`reactFromMarkupContainer E2E tests Should work for nested markup containers 1`] = `
+"
+      <div data-react-from-markup-container=\\"\\">
+        <span>rehydrated component</span>
+          <div data-react-from-markup-container=\\"\\">
+            <span>rehydrated component</span>
+            <span>rehydrated component</span>
+          </div>
+      </div>"
+`;

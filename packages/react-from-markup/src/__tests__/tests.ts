@@ -37,4 +37,39 @@ describe("reactFromMarkupContainer E2E tests", async () => {
 
     expect(documentElement.innerHTML).toMatchSnapshot();
   });
+
+  it("Should work for nested markup containers", async () => {
+    const componentName: string = "mycomponentName";
+
+    const mockCall = jest.fn();
+    const rehydrators = {
+      [componentName]: async () => {
+        mockCall();
+
+        return React.createElement("span", {}, "rehydrated component");
+      }
+    };
+
+    const documentElement = document.createElement("div");
+
+    documentElement.innerHTML = `
+      <div data-react-from-markup-container>
+        <div data-rehydratable="${componentName}"></div>
+          <div data-react-from-markup-container>
+            <div data-rehydratable="${componentName}">
+              <div data-react-from-markup-container>
+                <div data-rehydratable="${componentName}"></div>
+              </div>
+            </div>
+            <div data-rehydratable="${componentName}"></div>
+          </div>
+      </div>`;
+
+    await reactFromMarkupContainer(documentElement, rehydrators, {
+      extra: {}
+    });
+
+    expect(documentElement.innerHTML).toMatchSnapshot();
+    expect(mockCall).toBeCalledTimes(3);
+  });
 });
