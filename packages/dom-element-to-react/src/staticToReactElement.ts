@@ -51,7 +51,7 @@ export default async (el: Element, recursor: StaticToReactElementRecursor) => {
         {}
       );
 
-    if (attributes.style) {
+    if ("style" in attributes) {
       attributes = bootstrapStyles(attributes);
     }
 
