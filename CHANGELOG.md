@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-pre.4"></a>
+# [2.0.0-pre.4](https://github.com/simon360/react-from-markup/compare/v2.0.0-pre.3...v2.0.0-pre.4) (2018-12-10)
+
+
+### Bug Fixes
+
+* empty style tag no longer throws error ([74e5da7](https://github.com/simon360/react-from-markup/commit/74e5da7))
+* solve for potential unmounting issue when re-running rehydrate ([a300033](https://github.com/simon360/react-from-markup/commit/a300033))
+* upgrade npm-run-all to v4.1.5 ([d5e06fb](https://github.com/simon360/react-from-markup/commit/d5e06fb))
+
+
+
+
+
 <a name="2.0.0-pre.3"></a>
 # [2.0.0-pre.3](https://github.com/simon360/react-from-markup/compare/v2.0.0-pre.2...v2.0.0-pre.3) (2018-09-25)
 
