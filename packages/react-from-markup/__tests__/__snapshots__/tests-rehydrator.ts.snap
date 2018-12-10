@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rehydratableToReactElement should fail if element is not a rehydratable 1`] = `[Error: Rehydrator name is missing from element.]`;
+
+exports[`rehydratableToReactElement should fail if rehydrator does not exist 1`] = `[Error: No rehydrator found for type MyRehydratable]`;
