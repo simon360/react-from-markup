@@ -1,6 +1,6 @@
 {
   "name": "react-from-markup",
-  "version": "2.0.0-pre.3",
+  "version": "2.0.0-pre.4",
   "description": "Convert regions of markup into React, with custom callbacks",
   "main": "lib/index.js",
   "author": "Simon Andrews <me@simonandrews.ca>",
@@ -9,7 +9,7 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "dom-element-to-react": "^2.0.0-pre.3"
+    "dom-element-to-react": "^2.0.0-pre.4"
   },
   "peerDependencies": {
     "react": "^16.4.0",
