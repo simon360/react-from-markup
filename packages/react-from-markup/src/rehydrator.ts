@@ -75,7 +75,13 @@ export default async (
   const roots = Array.from(
     // TODO: allow setting a container identifier so multiple rehydration instances can exist
     container.querySelectorAll("[data-react-from-markup-container]")
-  );
+  ).reduce((acc: Element[], root: Element) => {
+    // filter roots that are contained within other roots
+    if (!acc.some(r => r.contains(root))) {
+      acc.push(root);
+    }
+    return acc;
+  }, []);
 
   // TODO: solve race condition when a second rehydrate runs
 
