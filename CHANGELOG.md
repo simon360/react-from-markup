@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-pre.5"></a>
+# [2.0.0-pre.5](https://github.com/simon360/react-from-markup/compare/v2.0.0-pre.4...v2.0.0-pre.5) (2018-12-11)
+
+
+### Bug Fixes
+
+* don't output __tests__ in lib ([cd77a34](https://github.com/simon360/react-from-markup/commit/cd77a34))
+* skip nested markup containers ([efa6060](https://github.com/simon360/react-from-markup/commit/efa6060))
+
+
+
+
+
 <a name="2.0.0-pre.4"></a>
 # [2.0.0-pre.4](https://github.com/simon360/react-from-markup/compare/v2.0.0-pre.3...v2.0.0-pre.4) (2018-12-10)
 
