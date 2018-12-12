@@ -6,7 +6,10 @@
     "exclude": ["**/lib/**"]
   },
   "rules": {
-    "no-implicit-dependencies": [true, "dev"]
+    "no-implicit-dependencies": [true, "dev"],
+    "prettier": true
   },
-  "rulesDirectory": []
+  "rulesDirectory": [
+    "tslint-plugin-prettier"
+  ]
 }
