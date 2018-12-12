@@ -10,6 +10,7 @@
     "deploy": "yarn docz:build && gh-pages -d .docz/dist",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
+    "format": "prettier **/*.js **/*.ts !**/lib/** --write",
     "postinstall": "npm-run-all compile",
     "lint": "npm-run-all lint:*",
     "lint:ts": "tslint -c tslint.json './packages/**/*.ts*(x)'",
