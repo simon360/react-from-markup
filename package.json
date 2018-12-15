@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "compile": "lerna run compile",
+    "cz": "git-cz",
     "deploy": "yarn docz:build && gh-pages -d .docz/dist",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
@@ -26,6 +27,8 @@
     "@types/jest": "^23.3.1",
     "@types/react": "^16.4.13",
     "@types/react-dom": "^16.0.7",
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "2.1.0",
     "docz": "^0.11.2",
     "gh-pages": "^2.0.0",
     "jest": "^23.5.0",
@@ -55,6 +58,11 @@
     "testMatch": [
       "**/__tests__/*.+(ts|tsx|js)"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "workspaces": [
     "packages/*"
