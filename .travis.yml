@@ -3,6 +3,7 @@ node_js:
   - "10"
 
 script:
+  - commitlint-travis
   - yarn compile
   - yarn test
   - yarn docz:build

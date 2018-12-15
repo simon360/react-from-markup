@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "compile": "lerna run compile",
+    "cz": "git-cz",
     "deploy": "yarn docz:build && gh-pages -d .docz/dist",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
@@ -19,13 +20,19 @@
     "test": "jest"
   },
   "dependencies": {
+    "husky": "^1.2.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
+    "@commitlint/travis-cli": "^7.2.1",
     "@types/jest": "^23.3.1",
     "@types/react": "^16.4.13",
     "@types/react-dom": "^16.0.7",
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "2.1.0",
     "docz": "^0.11.2",
     "gh-pages": "^2.0.0",
     "jest": "^23.5.0",
@@ -37,6 +44,11 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "jest": {
     "moduleFileExtensions": [
@@ -55,6 +67,11 @@
     "testMatch": [
       "**/__tests__/*.+(ts|tsx|js)"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "workspaces": [
     "packages/*"
