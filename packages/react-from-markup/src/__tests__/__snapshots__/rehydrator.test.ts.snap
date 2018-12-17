@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rehydrate should handle an exception in rehydrateChildren 1`] = `
+Array [
+  "Rehydration failure",
+  "test rejection",
+]
+`;
