@@ -23,7 +23,8 @@ const rehydratableToReactElement = async (
 
   return rehydrator(
     el,
-    children => rehydrateChildren(children, rehydrators, options),
+    async children =>
+      (await rehydrateChildren(children, rehydrators, options)).rehydrated,
     options.extra
   );
 };
@@ -44,11 +45,34 @@ const createCustomHandler = (
   return false;
 };
 
-const rehydrateChildren = (
+const createReactRoot = (el: Node) => {
+  const container = document.createElement("div");
+
+  if (el.parentNode) {
+    el.parentNode.replaceChild(container, el);
+  }
+
+  container.appendChild(el);
+  container.classList.add("rehydration-root");
+
+  return container;
+};
+
+const rehydrateChildren = async (
   el: Node,
   rehydrators: IRehydrator,
   options: IOptions
-) => domElementToReact(el, createCustomHandler(rehydrators, options));
+) => {
+  const container = createReactRoot(el);
+
+  return {
+    container,
+    rehydrated: await domElementToReact(
+      container,
+      createCustomHandler(rehydrators, options)
+    )
+  };
+};
 
 const render = ({
   rehydrated,
@@ -67,14 +91,23 @@ const render = ({
   ReactDOM.render(rehydrated as React.ReactElement<any>, root);
 };
 
+const createQuerySelector = (rehydratableIds: string[]) =>
+  rehydratableIds.reduce(
+    (acc: string, rehydratableId: string) =>
+      `${acc ? `${acc}, ` : ""}[data-rehydratable*="${rehydratableId}"]`,
+    ""
+  );
+
 export default async (
   container: Element,
   rehydrators: IRehydrator,
   options: IOptions
 ) => {
+  const selector = createQuerySelector(Object.keys(rehydrators));
+
   const roots = Array.from(
     // TODO: allow setting a container identifier so multiple rehydration instances can exist
-    container.querySelectorAll("[data-react-from-markup-container]")
+    container.querySelectorAll(selector)
   ).reduce((acc: Element[], root: Element) => {
     // filter roots that are contained within other roots
     if (!acc.some(r => r.contains(root))) {
@@ -92,13 +125,12 @@ export default async (
     if (container.contains(root)) {
       renders.push(async () => {
         try {
-          const rehydrated = await rehydrateChildren(
-            root,
-            rehydrators,
-            options
-          );
+          const {
+            container: rootContainer,
+            rehydrated
+          } = await rehydrateChildren(root, rehydrators, options);
 
-          return { root, rehydrated };
+          return { root: rootContainer, rehydrated };
         } catch (e) {
           /* tslint:disable-next-line no-console */
           console.error("Rehydration failure", e);
