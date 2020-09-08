@@ -1,15 +1,24 @@
 import domElementToReact from "dom-element-to-react";
 import * as ReactDOM from "react-dom";
 
+import ILoadedOptions from "./ILoadedOptions";
 import IOptions from "./IOptions";
 import IRehydrator from "./IRehydrator";
 
 const rehydratableToReactElement = async (
   el: Element,
   rehydrators: IRehydrator,
-  options: IOptions
+  options: ILoadedOptions
 ): Promise<React.ReactElement<any>> => {
-  const rehydratorName = el.getAttribute("data-rehydratable");
+  const rehydratorSelector = Object.keys(options.allSelectors).find(selector =>
+    el.matches(selector)
+  );
+
+  if (!rehydratorSelector) {
+    throw new Error("No rehydrator selector matched the element.");
+  }
+
+  const rehydratorName = options.allSelectors[rehydratorSelector];
 
   if (!rehydratorName) {
     throw new Error("Rehydrator name is missing from element.");
@@ -31,13 +40,13 @@ const rehydratableToReactElement = async (
 
 const createCustomHandler = (
   rehydrators: IRehydrator,
-  options: IOptions
+  options: ILoadedOptions
 ) => async (node: Node) => {
   // This function will run on _every_ node that domElementToReact encounters.
   // Make sure to keep the conditional highly performant.
   if (
     node.nodeType === Node.ELEMENT_NODE &&
-    (node as Element).hasAttribute("data-rehydratable")
+    (node as Element).matches(options.compoundSelector)
   ) {
     return rehydratableToReactElement(node as Element, rehydrators, options);
   }
@@ -61,7 +70,7 @@ const createReactRoot = (el: Node) => {
 const rehydrateChildren = async (
   el: Node,
   rehydrators: IRehydrator,
-  options: IOptions
+  options: ILoadedOptions
 ) => {
   const container = createReactRoot(el);
 
@@ -91,30 +100,55 @@ const render = ({
   ReactDOM.render(rehydrated as React.ReactElement<any>, root);
 };
 
-const createQuerySelector = (rehydratableIds: string[]) =>
-  rehydratableIds.reduce(
-    (acc: string, rehydratableId: string) =>
-      `${acc ? `${acc}, ` : ""}[data-rehydratable*="${rehydratableId}"]`,
+const defaultGetQuerySelector = (key: string) =>
+  `[data-rehydratable*="${key}"]`;
+
+const createQuerySelectors = (
+  rehydratableIds: string[],
+  getQuerySelector: ((key: string) => string) = defaultGetQuerySelector
+) => {
+  const allSelectors: { [key: string]: string } = rehydratableIds.reduce(
+    (acc, key) => ({ ...acc, [getQuerySelector(key)]: key }),
+    {}
+  );
+
+  const compoundSelector = Object.keys(allSelectors).reduce(
+    (acc: string, selector: string) => `${acc ? `${acc}, ` : ""}${selector}`,
     ""
   );
+
+  return {
+    allSelectors,
+    compoundSelector
+  };
+};
 
 export default async (
   container: Element,
   rehydrators: IRehydrator,
   options: IOptions
 ) => {
-  const selector = createQuerySelector(Object.keys(rehydrators));
+  const { allSelectors, compoundSelector } = createQuerySelectors(
+    Object.keys(rehydrators),
+    options.getQuerySelector
+  );
 
-  const roots = Array.from(
-    // TODO: allow setting a container identifier so multiple rehydration instances can exist
-    container.querySelectorAll(selector)
-  ).reduce((acc: Element[], root: Element) => {
-    // filter roots that are contained within other roots
-    if (!acc.some(r => r.contains(root))) {
-      acc.push(root);
-    }
-    return acc;
-  }, []);
+  const loadedOptions: ILoadedOptions = {
+    allSelectors,
+    compoundSelector,
+    extra: options.extra
+  };
+
+  const roots = Array.from(container.querySelectorAll(compoundSelector)).reduce(
+    (acc: Element[], root: Element) => {
+      // filter roots that are contained within other roots
+      if (!acc.some(r => r.contains(root))) {
+        acc.push(root);
+      }
+      return acc;
+    },
+    []
+  );
 
   // TODO: solve race condition when a second rehydrate runs
 
@@ -128,7 +162,7 @@ export default async (
           const {
             container: rootContainer,
             rehydrated
-          } = await rehydrateChildren(root, rehydrators, options);
+          } = await rehydrateChildren(root, rehydrators, loadedOptions);
 
           return { root: rootContainer, rehydrated };
         } catch (e) {
