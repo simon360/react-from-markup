@@ -1,3 +1,5 @@
+> **This repository has been archived and its packages are no longer maintained**. If you still require `react-from-markup`, you are free to fork this repository and re-publish the packages on a private `npm` server, or under a different public namespace.
+
 # React from Markup
 
 > Declare your React components with static HTML
