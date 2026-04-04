@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-rehydrate Examples</title>
+    <style>
+      body {
+        font-family: Georgia, serif;
+        margin: 0;
+        padding: 40px 24px;
+        background: linear-gradient(180deg, #f7f1e8 0%, #fffdf9 100%);
+        color: #2b2117;
+      }
+
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        padding-left: 1.25rem;
+      }
+
+      li + li {
+        margin-top: 0.75rem;
+      }
+
+      a {
+        color: #8a2f12;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Examples</h1>
+      <p>Choose a demo page to load the shared Vite bundle and run rehydration.</p>
+      <ul>
+        <li><a href="./static/" data-force-reload="true">Static</a></li>
+        <li><a href="./hello-user/" data-force-reload="true">Hello User</a></li>
+        <li><a href="./show-more-text/" data-force-reload="true">Show More Text</a></li>
+        <li><a href="./show-more/" data-force-reload="true">Show More</a></li>
+        <li><a href="./asynchronous/" data-force-reload="true">Asynchronous</a></li>
+      </ul>
+    </main>
+    <script>
+      document.addEventListener("click", function(event) {
+        var link = event.target.closest("a[data-force-reload='true']");
+
+        if (!link) {
+          return;
+        }
+
+        event.preventDefault();
+        window.location.assign(link.href);
+      });
+    </script>
+  </body>
+</html>

@@ -1,8 +1,11 @@
-import domElementToReact from "dom-element-to-react";
+import domElementToReact from "@sivaraj-v/dom-element-to-react";
 import * as ReactDOM from "react-dom";
+import { createRoot, IRoot } from "react-dom/client";
 
-import IOptions from "./IOptions";
-import IRehydrator from "./IRehydrator";
+type IOptions = import("./IOptions").default;
+type IRehydrator = import("./IRehydrator").default;
+
+const reactRoots = new WeakMap<Element, IRoot>();
 
 const rehydratableToReactElement = async (
   el: Element,
@@ -61,10 +64,17 @@ const render = ({
     return;
   }
 
-  // Unmount; it's possible that this was rehydrated previously.
-  ReactDOM.unmountComponentAtNode(root);
+  const reactRoot = reactRoots.get(root) || createRoot(root);
+  reactRoots.set(root, reactRoot);
 
-  ReactDOM.render(rehydrated as React.ReactElement<any>, root);
+  const flushSync = (ReactDOM as any).flushSync;
+
+  if (flushSync) {
+    flushSync(() => reactRoot.render(rehydrated));
+    return;
+  }
+
+  reactRoot.render(rehydrated);
 };
 
 export default async (

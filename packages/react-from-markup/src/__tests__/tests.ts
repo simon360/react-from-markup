@@ -12,6 +12,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
 
     const rehydrators = { [componentName]: rehydrator };
     const documentElement = document.createElement("div");
+    document.body.appendChild(documentElement);
 
     documentElement.innerHTML = `
       <div data-react-from-markup-container>
@@ -23,10 +24,12 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
+    document.body.removeChild(documentElement);
   });
 
   it("Should rehydrate valid HTML markup", async () => {
     const documentElement = document.createElement("div");
+    document.body.appendChild(documentElement);
 
     documentElement.innerHTML = `
     <div data-react-from-markup-container>
@@ -36,6 +39,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     await reactFromMarkupContainer(documentElement, {}, { extra: {} });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
+    document.body.removeChild(documentElement);
   });
 
   it("Should work for nested markup containers", async () => {
@@ -51,6 +55,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     };
 
     const documentElement = document.createElement("div");
+    document.body.appendChild(documentElement);
 
     documentElement.innerHTML = `
       <div data-react-from-markup-container>
@@ -71,5 +76,6 @@ describe("reactFromMarkupContainer E2E tests", async () => {
 
     expect(documentElement.innerHTML).toMatchSnapshot();
     expect(mockCall).toBeCalledTimes(3);
+    document.body.removeChild(documentElement);
   });
 });

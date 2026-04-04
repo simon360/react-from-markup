@@ -1,0 +1,19 @@
+{
+  "name": "react-rehydrate-examples",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "@sivaraj-v/react-rehydrate": "1.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.19"
+  }
+}

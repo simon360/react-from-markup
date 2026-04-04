@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show More Example</title>
+  </head>
+  <body data-example="show-more">
+    <div id="app">
+      <div data-react-from-markup-container>
+        <div class="ShowMore" data-rehydratable="ShowMore">
+          <button>Show more</button>
+          <div class="ShowMore-children" style="display:none">
+            <p>I can contain <b>complex</b> <em>DOM structures</em>.</p>
+            <h2 data-rehydratable="HelloUser">Hello, !</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../main.js"></script>
+  </body>
+</html>

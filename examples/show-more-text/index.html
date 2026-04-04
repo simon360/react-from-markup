@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show More Text Example</title>
+  </head>
+  <body data-example="show-more-text">
+    <div id="app">
+      <div data-react-from-markup-container>
+        <div
+          class="ShowMoreText"
+          data-rehydratable="ShowMoreText"
+          data-content="Hello, world!"
+        >
+          <button>Show more</button>
+          <p class="ShowMoreText-content" style="display:none">Hello, world!</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../main.js"></script>
+  </body>
+</html>
